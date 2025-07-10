@@ -70,13 +70,13 @@
   </div>
 
   <!-- Gallery Modal -->
-  <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20">
+  <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
     <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
-    <h2 class="text-white text-3xl font-semibold mb-6">Event Gallery</h2>
-    <div class="w-full max-w-6xl px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-center" id="thumbsContainer"></div>
+    <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2>
+    <div class="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mx-auto" id="thumbsContainer"></div>
     <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60">
       <div class="relative bg-black bg-opacity-90 flex items-center justify-center w-full h-full">
-        <div id="mediaContent" class="relative w-1/2 max-h-[80vh]">
+        <div id="mediaContent" class="relative w-11/12 sm:w-4/5 md:w-1/2 max-h-[80vh]">
           <button onclick="closeMedia()" class="absolute -top-4 -right-4 text-white text-3xl font-bold z-50">&times;</button>
           <button onclick="prevMedia()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
           <button onclick="nextMedia()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
@@ -143,7 +143,7 @@
 
       const el = document.createElement(item.type === 'image' ? 'img' : 'video');
       el.src = item.src;
-      el.className = "w-1/2 max-h-[70vh] object-contain rounded-xl border-4 border-yellow-300 shadow-xl";
+      el.className = "w-full sm:w-4/5 md:w-1/2 max-h-[70vh] object-contain rounded-xl border-4 border-yellow-300 shadow-xl";
       if (item.type === 'video') {
         el.controls = true;
         el.autoplay = true;
