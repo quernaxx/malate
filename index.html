@@ -15,9 +15,28 @@
     .thumbnail video::-webkit-media-controls-fullscreen-button {
       display: block;
     }
+    @keyframes flash-border {
+      0% { border-color: #f43f5e; }
+      25% { border-color: #facc15; }
+      50% { border-color: #10b981; }
+      75% { border-color: #3b82f6; }
+      100% { border-color: #a855f7; }
+    }
+    .flash-border {
+      animation: flash-border 2s linear infinite;
+    }
   </style>
 </head>
 <body class="bg-black text-white relative overflow-x-hidden">
+
+  <!-- Background Music -->
+  <audio id="backgroundAudio" autoplay loop>
+    <source src="audio/dj-trance-and-techno-2mp3-358846.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <button onclick="toggleAudio()" class="fixed bottom-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full shadow-lg transition">
+    Toggle Music
+  </button>
 
   <!-- Background Images -->
   <div class="absolute inset-0 z-0 flex background-strip">
@@ -33,6 +52,7 @@
     </video>
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
       <div>
+        <img src="images/logo.png" alt="Logo" class="mx-auto mb-4 w-150 h-150 object-contain">
         <h1 class="text-5xl md:text-6xl font-extrabold tracking-widest mb-1">QUERNAXX</h1>
         <h2 class="text-2xl font-semibold text-purple-300 mb-4">Malate</h2>
         <p class="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
@@ -65,8 +85,9 @@
         <p class="text-lg">1727 A. Mabini St, Malate, Manila, 1004 Metro Manila</p>
       </div>
       <p class="text-lg">Email: quernaxxmalate@gmail.com</p>
-      <p class="text-lg">Phone: (02) 8706 5784</p><br>
-      <p class="text-lg">       (02) 8708 0335</p>
+      <p class="text-lg">Phone Numbers</p>
+      <p class="text-lg">(02) 8706 5784</p>
+      <p class="text-lg">(02) 8708 0335</p>
     </div>
   </div>
 
@@ -74,7 +95,7 @@
   <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
     <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
     <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2>
-    <div class="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mx-auto" id="thumbsContainer"></div>
+    <div class="w-full max-w-6xl grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mx-auto justify-center items-center" id="thumbsContainer"></div>
     <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60">
       <div class="relative bg-black bg-opacity-90 flex items-center justify-center w-full h-full">
         <div id="mediaContent" class="relative w-11/12 sm:w-4/5 md:w-1/2 max-h-[80vh]">
@@ -86,7 +107,9 @@
     </div>
   </div>
 
+  <!-- Gallery Script -->
   <script>
+
     const galleryItems = [
       { src: "images/gallery1.jpg", type: "image" },
       { src: "images/gallery2.jpg", type: "image" },
@@ -100,6 +123,7 @@
       { src: "images/gallery10.jpg", type: "image" },
       { src: "images/gallery11.jpg", type: "image" },
       { src: "images/gallery12.mp4", type: "video" },
+      { src: "images/gallery13.jpg", type: "image" }
     ];
 
     let currentIndex = 0;
@@ -114,7 +138,7 @@
       galleryItems.forEach((item, index) => {
         const el = document.createElement(item.type === 'image' ? 'img' : 'video');
         el.src = item.src;
-        el.className = "rounded-lg shadow-md cursor-pointer object-cover w-full h-32 thumbnail border-2 border-yellow-300";
+        el.className = "rounded-lg shadow-md cursor-pointer object-cover w-60 h-60 thumbnail border-4 flash-border";
         if (item.type === 'video') {
           el.controls = true;
           el.muted = true;
@@ -144,7 +168,7 @@
 
       const el = document.createElement(item.type === 'image' ? 'img' : 'video');
       el.src = item.src;
-      el.className = "w-full sm:w-4/5 md:w-1/2 max-h-[70vh] object-contain rounded-xl border-4 border-yellow-300 shadow-xl";
+      el.className = "w-full sm:w-4/5 md:w-2/3 max-h-[70vh] object-contain rounded-xl border-4 flash-border shadow-xl";
       if (item.type === 'video') {
         el.controls = true;
         el.autoplay = true;
@@ -171,15 +195,25 @@
       openMedia(currentIndex);
     }
 
-    document.addEventListener("keydown", (e) => {
-      if (!mediaViewer.classList.contains("hidden")) {
-        if (e.key === "Escape") closeMedia();
-        if (e.key === "ArrowLeft") prevMedia();
-        if (e.key === "ArrowRight") nextMedia();
-      } else if (!modal.classList.contains("hidden")) {
-        if (e.key === "Escape") closeGallery();
+    const audio = document.getElementById('backgroundAudio');
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
       }
-    });
+    }
+
+document.addEventListener("keydown", (e) => {
+    if (!mediaViewer.classList.contains("hidden")) {
+      if (e.key === "Escape") closeMedia();
+      if (e.key === "ArrowLeft") prevMedia();
+      if (e.key === "ArrowRight") nextMedia();
+    } else if (!modal.classList.contains("hidden")) {
+      if (e.key === "Escape") closeGallery();
+    }
+  });
+    
   </script>
 
 </body>
