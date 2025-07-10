@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QUERNAXX Malate</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .background-strip img {
+      flex: 1;
+      object-fit: cover;
+      opacity: 0.2;
+      height: 100vh;
+    }
+    .thumbnail video::-webkit-media-controls-fullscreen-button {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-black text-white relative overflow-x-hidden">
+
+  <!-- Background Images -->
+  <div class="absolute inset-0 z-0 flex background-strip">
+    <img src="images/club1.jpg" alt="Club Scene 1" />
+    <img src="images/club2.jpg" alt="Club Scene 2" />
+    <img src="images/club3.jpg" alt="Club Scene 3" />
+  </div>
+
+  <!-- Hero Section -->
+  <div class="relative z-10 h-screen w-full overflow-hidden">
+    <video autoplay muted loop class="absolute w-full h-full object-cover">
+      <source src="videos/club-ambience.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
+      <div>
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-widest mb-1">QUERNAXX</h1>
+        <h2 class="text-2xl font-semibold text-purple-300 mb-4">Malate</h2>
+        <p class="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
+          Dive into the ultimate nightlife experience — music, lights, and electrifying vibes await you at Malate’s hottest music club.
+        </p>
+        <button onclick="openGallery()" class="bg-purple-600 hover:bg-purple-700 text-white text-lg px-8 py-4 rounded-2xl shadow-lg transition">
+          Explore Events
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div class="relative z-10 grid md:grid-cols-2 gap-8 px-6 md:px-16 py-20 bg-blue-200 text-black">
+    <div>
+      <h2 class="text-3xl font-bold mb-4">Events Calendar</h2>
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M8 7V3M16 7V3M4 11h16M5 20h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p class="text-lg">Coming soon – stay tuned for upcoming DJs and special nights.</p>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-3xl font-bold mb-4">Location & Contact</h2>
+      <div class="flex items-center mb-2">
+        <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M12 10a2 2 0 110-4 2 2 0 010 4zm0 11c-4.418 0-8-4.03-8-9a8 8 0 0116 0c0 4.97-3.582 9-8 9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p class="text-lg">1727 A. Mabini St, Malate, Manila, 1004 Metro Manila</p>
+      </div>
+      <p class="text-lg">Email: quernaxxmalate@gmail.com</p>
+      <p class="text-lg">Phone: (02) 8123 4567</p>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20">
+    <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
+    <h2 class="text-white text-3xl font-semibold mb-6">Event Gallery</h2>
+    <div class="w-full max-w-6xl px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-center" id="thumbsContainer"></div>
+    <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60">
+      <div class="relative bg-black bg-opacity-90 flex items-center justify-center w-full h-full">
+        <div id="mediaContent" class="relative w-1/2 max-h-[80vh]">
+          <button onclick="closeMedia()" class="absolute -top-4 -right-4 text-white text-3xl font-bold z-50">&times;</button>
+          <button onclick="prevMedia()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
+          <button onclick="nextMedia()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const galleryItems = [
+      { src: "images/gallery1.jpg", type: "image" },
+      { src: "images/gallery2.jpg", type: "image" },
+      { src: "images/gallery3.jpg", type: "image" },
+      { src: "images/gallery4.jpg", type: "image" },
+      { src: "images/gallery5.jpg", type: "image" },
+      { src: "images/gallery6.jpg", type: "image" },
+      { src: "images/gallery7.jpg", type: "image" },
+      { src: "images/gallery8.jpg", type: "image" },
+      { src: "images/gallery9.jpg", type: "image" },
+      { src: "images/gallery10.jpg", type: "image" },
+      { src: "images/gallery11.jpg", type: "image" },
+      { src: "images/gallery12.mp4", type: "video" },
+    ];
+
+    let currentIndex = 0;
+    const modal = document.getElementById("galleryModal");
+    const mediaViewer = document.getElementById("mediaViewer");
+    const mediaContent = document.getElementById("mediaContent");
+    const thumbsContainer = document.getElementById("thumbsContainer");
+
+    function openGallery() {
+      modal.classList.remove("hidden");
+      thumbsContainer.innerHTML = "";
+      galleryItems.forEach((item, index) => {
+        const el = document.createElement(item.type === 'image' ? 'img' : 'video');
+        el.src = item.src;
+        el.className = "rounded-lg shadow-md cursor-pointer object-cover w-full h-32 thumbnail border-2 border-yellow-300";
+        if (item.type === 'video') {
+          el.controls = true;
+          el.muted = true;
+        }
+        el.onclick = () => openMedia(index);
+        thumbsContainer.appendChild(el);
+      });
+    }
+
+    function closeGallery() {
+      modal.classList.add("hidden");
+      closeMedia();
+    }
+
+    function openMedia(index) {
+      currentIndex = index;
+      const item = galleryItems[index];
+      mediaViewer.classList.remove("hidden");
+      mediaContent.innerHTML = `
+        <button onclick="closeMedia()" class="absolute -top-4 -right-4 text-white text-3xl font-bold z-50">&times;</button>
+        <button onclick="prevMedia()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
+        <button onclick="nextMedia()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
+      `;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "w-full flex justify-center items-center";
+
+      const el = document.createElement(item.type === 'image' ? 'img' : 'video');
+      el.src = item.src;
+      el.className = "w-1/2 max-h-[70vh] object-contain rounded-xl border-4 border-yellow-300 shadow-xl";
+      if (item.type === 'video') {
+        el.controls = true;
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = false;
+      }
+
+      wrapper.appendChild(el);
+      mediaContent.appendChild(wrapper);
+    }
+
+    function closeMedia() {
+      mediaViewer.classList.add("hidden");
+      mediaContent.innerHTML = "";
+    }
+
+    function prevMedia() {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      openMedia(currentIndex);
+    }
+
+    function nextMedia() {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      openMedia(currentIndex);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (!mediaViewer.classList.contains("hidden")) {
+        if (e.key === "Escape") closeMedia();
+        if (e.key === "ArrowLeft") prevMedia();
+        if (e.key === "ArrowRight") nextMedia();
+      } else if (!modal.classList.contains("hidden")) {
+        if (e.key === "Escape") closeGallery();
+      }
+    });
+  </script>
+
+</body>
+</html>
