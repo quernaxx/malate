@@ -6,24 +6,52 @@
   <title>QUERNAXX Malate</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Background image animation synced to BPM (~128bpm → ~1.875s per cycle) */
+    @keyframes bpmDance {
+      0%   { transform: scale(1) rotate(0deg); opacity: 0.15; }
+      25%  { transform: scale(1.05) rotate(1deg); opacity: 0.25; }
+      50%  { transform: scale(1.1) rotate(-1deg); opacity: 0.2; }
+      75%  { transform: scale(1.05) rotate(0.5deg); opacity: 0.3; }
+      100% { transform: scale(1) rotate(0deg); opacity: 0.15; }
+    }
+
     .background-strip img {
       flex: 1;
       object-fit: cover;
-      opacity: 0.2;
       height: 100vh;
+      animation: bpmDance 1.875s ease-in-out infinite;
     }
-    .thumbnail video::-webkit-media-controls-fullscreen-button {
-      display: block;
+
+    .background-strip img:nth-child(1) {
+      animation-delay: 0s;
     }
+    .background-strip img:nth-child(2) {
+      animation-delay: 0.625s;
+    }
+    .background-strip img:nth-child(3) {
+      animation-delay: 1.25s;
+    }
+
+    /* Flashing border for gallery thumbnails */
     @keyframes flash-border {
-      0% { border-color: #f43f5e; }
-      25% { border-color: #facc15; }
-      50% { border-color: #10b981; }
-      75% { border-color: #3b82f6; }
+      0%   { border-color: #f43f5e; }
+      25%  { border-color: #facc15; }
+      50%  { border-color: #10b981; }
+      75%  { border-color: #3b82f6; }
       100% { border-color: #a855f7; }
     }
+
     .flash-border {
       animation: flash-border 2s linear infinite;
+    }
+
+    .thumbnail video::-webkit-media-controls-fullscreen-button {
+      display: block;
     }
   </style>
 </head>
@@ -64,6 +92,30 @@
       </div>
     </div>
   </div>
+
+<!-- Hours & Invitation -->
+<div class="mt-12 text-center bg-black text-white py-10 px-6 rounded-xl shadow-lg border-4 border-purple-600">
+  <h2 class="text-4xl font-extrabold text-purple-400 mb-4">🎉 Soft Opening Invitation 🎉</h2>
+  <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-6">
+    You’re invited to the <span class="text-pink-500 font-bold">soft opening</span> of the newest and hottest music club in Malate — 
+    <span class="text-purple-300 font-extrabold">QUERNAXX</span> Malate!
+  </p>
+  <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-4">
+    Be part of history as we open our doors for the first time on <span class="text-yellow-300 font-semibold">July 15, 2025</span>. 
+    Get ready for pulsing beats, dancing lights, and an unforgettable night of music, drinks, and energy!
+  </p>
+  <p class="text-lg md:text-xl text-white font-semibold mb-2">⏰ Hours of Operation</p>
+  <p class="text-lg text-gray-300">Open daily from <span class="text-green-400 font-bold">8:00 PM</span> to <span class="text-red-400 font-bold">6:00 AM</span></p>
+  <p class="text-sm text-gray-500 mt-2 italic">*First of its kind in Malate to offer extended party hours!</p>
+
+  <!-- Reservation Button -->
+  <div class="mt-6">
+    <a href="https://t.me/+FQrUzPleQAxhZTM1" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-lg font-bold px-8 py-4 rounded-full shadow-xl transition-transform transform hover:scale-105">
+  Be Part of the Launch 🎧
+</a>
+  </div>
+</div>
+
 <!-- Info Section -->
 <div class="relative z-10 px-6 md:px-16 py-20 bg-blue-200 text-black">
 
@@ -118,7 +170,7 @@
   <!-- Gallery Modal -->
   <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
     <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
-    <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2>
+    <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2><br>
     <div class="w-full max-w-6xl grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mx-auto justify-center items-center" id="thumbsContainer"></div>
     <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60">
       <div class="relative bg-black bg-opacity-90 flex items-center justify-center w-full h-full">
