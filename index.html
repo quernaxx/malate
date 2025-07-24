@@ -116,8 +116,13 @@
   </div>
 </div>
 
-<!-- Info Section -->
-<div class="relative z-10 px-6 md:px-16 py-20 bg-blue-200 text-black">
+<!-- Theme Toggle Button -->
+<button id="themeToggle" class="fixed top-4 right-4 z-50 bg-black bg-opacity-80 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-purple-700 transition">
+  🎨 Change Theme
+</button>
+
+<!-- Info Section (with dynamic color themes) -->
+<div id="colorSection" class="relative z-10 px-6 md:px-16 py-20 bg-blue-200 text-black transition-all duration-700 ease-in-out">
 
   <!-- Grid layout for Event & Contact -->
   <div class="grid md:grid-cols-2 gap-8 mb-12">
@@ -164,143 +169,40 @@
       </iframe>
     </div>
   </div>
-
 </div>
 
-  <!-- Gallery Modal -->
-  <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
-    <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
-    <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2><br>
-    <div class="w-full max-w-6xl grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mx-auto justify-center items-center" id="thumbsContainer"></div>
-    <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60">
-      <div class="relative bg-black bg-opacity-90 flex items-center justify-center w-full h-full">
-        <div id="mediaContent" class="relative w-11/12 sm:w-4/5 md:w-1/2 max-h-[80vh]">
-          <button onclick="closeMedia()" class="absolute -top-4 -right-4 text-white text-3xl font-bold z-50">&times;</button>
-          <button onclick="prevMedia()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
-          <button onclick="nextMedia()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Add this before </body> -->
+<script>
+  const themes = [
+    { bg: 'bg-blue-200', text: 'text-black' },
+    { bg: 'bg-purple-200', text: 'text-black' },
+    { bg: 'bg-pink-200', text: 'text-black' },
+    { bg: 'bg-gray-900', text: 'text-white' },
+    { bg: 'bg-yellow-100', text: 'text-black' },
+    { bg: 'bg-gradient-to-r from-purple-200 via-pink-100 to-yellow-100', text: 'text-black' }
+  ];
 
-  <!-- Gallery Script -->
-  <script>
+  let currentTheme = 0;
+  const section = document.getElementById('colorSection');
+  const themeToggleBtn = document.getElementById('themeToggle');
 
-    const galleryItems = [
-      { src: "images/gallery1.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun1.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun2.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun3.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun4.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun5.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun6.jpg", type: "image" },
-      { src: "images/girlsjusthavingfun7.jpg", type: "image" },
-      { src: "images/gallery3.jpg", type: "image" },
-      { src: "images/gallery4.jpg", type: "image" },
-      { src: "images/gallery5.jpg", type: "image" },
-      { src: "images/gallery6.jpg", type: "image" },
-      { src: "images/gallery7.jpg", type: "image" },
-      { src: "images/gallery8.jpg", type: "image" },
-      { src: "images/gallery9.jpg", type: "image" },
-      { src: "images/gallery10.jpg", type: "image" },
-      { src: "images/gallery11.jpg", type: "image" },
-      { src: "images/gallery12.mp4", type: "video" },
-      { src: "images/gallery13.jpg", type: "image" },
-      { src: "images/quernaxx_hapeenings4.mp4", type: "video" },
-      { src: "images/quernaxx_happenings2.mp4", type: "video" },
-      { src: "quernaxx_happenings1.mp4", type: "video" },
-      
-    ];
+  function applyTheme(index) {
+    // Remove previous theme classes
+    section.className = 'relative z-10 px-6 md:px-16 py-20 transition-all duration-700 ease-in-out';
+    section.classList.add(themes[index].bg);
+    section.classList.add(themes[index].text);
+  }
 
-    let currentIndex = 0;
-    const modal = document.getElementById("galleryModal");
-    const mediaViewer = document.getElementById("mediaViewer");
-    const mediaContent = document.getElementById("mediaContent");
-    const thumbsContainer = document.getElementById("thumbsContainer");
-
-    function openGallery() {
-      modal.classList.remove("hidden");
-      thumbsContainer.innerHTML = "";
-      galleryItems.forEach((item, index) => {
-        const el = document.createElement(item.type === 'image' ? 'img' : 'video');
-        el.src = item.src;
-        el.className = "rounded-lg shadow-md cursor-pointer object-cover w-60 h-60 thumbnail border-4 flash-border";
-        if (item.type === 'video') {
-          el.controls = true;
-          el.muted = true;
-        }
-        el.onclick = () => openMedia(index);
-        thumbsContainer.appendChild(el);
-      });
-    }
-
-    function closeGallery() {
-      modal.classList.add("hidden");
-      closeMedia();
-    }
-
-    function openMedia(index) {
-      currentIndex = index;
-      const item = galleryItems[index];
-      mediaViewer.classList.remove("hidden");
-      mediaContent.innerHTML = `
-        <button onclick="closeMedia()" class="absolute -top-4 -right-4 text-white text-3xl font-bold z-50">&times;</button>
-        <button onclick="prevMedia()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
-        <button onclick="nextMedia()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
-      `;
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "w-full flex justify-center items-center";
-
-      const el = document.createElement(item.type === 'image' ? 'img' : 'video');
-      el.src = item.src;
-      el.className = "w-full sm:w-4/5 md:w-2/3 max-h-[70vh] object-contain rounded-xl border-4 flash-border shadow-xl";
-      if (item.type === 'video') {
-        el.controls = true;
-        el.autoplay = true;
-        el.loop = true;
-        el.muted = false;
-      }
-
-      wrapper.appendChild(el);
-      mediaContent.appendChild(wrapper);
-    }
-
-    function closeMedia() {
-      mediaViewer.classList.add("hidden");
-      mediaContent.innerHTML = "";
-    }
-
-    function prevMedia() {
-      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-      openMedia(currentIndex);
-    }
-
-    function nextMedia() {
-      currentIndex = (currentIndex + 1) % galleryItems.length;
-      openMedia(currentIndex);
-    }
-
-    const audio = document.getElementById('backgroundAudio');
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-    }
-
-document.addEventListener("keydown", (e) => {
-    if (!mediaViewer.classList.contains("hidden")) {
-      if (e.key === "Escape") closeMedia();
-      if (e.key === "ArrowLeft") prevMedia();
-      if (e.key === "ArrowRight") nextMedia();
-    } else if (!modal.classList.contains("hidden")) {
-      if (e.key === "Escape") closeGallery();
-    }
+  themeToggleBtn.addEventListener('click', () => {
+    currentTheme = (currentTheme + 1) % themes.length;
+    applyTheme(currentTheme);
   });
-    
-  </script>
+
+  setInterval(() => {
+    currentTheme = (currentTheme + 1) % themes.length;
+    applyTheme(currentTheme);
+  }, 5000);
+</script>
 
 </body>
 </html>
