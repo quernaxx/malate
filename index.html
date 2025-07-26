@@ -126,59 +126,61 @@
 <div id="colorSection" class="relative z-10 px-6 md:px-16 py-20 bg-blue-200 text-black transition-all duration-700 ease-in-out">
 
   <!-- Grid layout for Event & Contact -->
-  <div class="grid md:grid-cols-2 gap-8 mb-12">
-    <!-- Event Calendar -->
-<div>
-  <h2 class="text-3xl font-bold mb-4">Events Calendar</h2>
-  <div class="flex items-center mb-6">
-    <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path d="M8 7V3M16 7V3M4 11h16M5 20h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-    <p class="text-lg">Check out our featured promos and upcoming nights below!</p>
-  </div>
+<div class="grid md:grid-cols-2 gap-8 mb-12">
+  <!-- 📅 Event Calendar + Promo Images (Left) -->
+  <div>
+    <h2 class="text-3xl font-bold mb-4">Events Calendar</h2>
+    <div class="flex items-center mb-6">
+      <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M8 7V3M16 7V3M4 11h16M5 20h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <p class="text-lg">Check out our featured promos and upcoming nights below!</p>
+    </div>
 
-  <!-- 🃏 Promo Card Deck -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
-      <img src="images/Quernaxx Happy Hour.png" alt="Promo 1" class="w-full h-auto object-cover max-h-96">
-    </div>
-    <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
-      <img src="images/Quarnaxx Ladies Night.png" alt="Promo 2" class="w-full h-auto object-cover max-h-96">
-    </div>
-  </div>
-    <!-- Location & Contact -->
-    <div>
-      <h2 class="text-3xl font-bold mb-4">Location & Contact</h2>
-      <div class="flex items-center mb-2">
-        <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M12 10a2 2 0 110-4 2 2 0 010 4zm0 11c-4.418 0-8-4.03-8-9a8 8 0 0116 0c0 4.97-3.582 9-8 9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        <a href="https://www.google.com/maps/place/1727+A.+Mabini+St,+Malate,+Manila,+1004+Metro+Manila" target="_blank" class="text-lg text-blue-800 underline hover:text-blue-600 transition">
-          1727 A. Mabini St, Malate, Manila, 1004 Metro Manila
-        </a>
+    <!-- Promo Images Side-by-Side -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
+        <img src="images/promo-event1.jpg" alt="Promo 1" class="w-full h-auto object-cover max-h-96">
       </div>
-      <p class="text-lg">Email: quernaxxmalate@gmail.com</p>
-      <p class="text-lg">Phone Numbers</p>
-      <p class="text-lg">(02) 8706 5784</p>
-      <p class="text-lg mb-4">(02) 8708 0335</p>
+      <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
+        <img src="images/promo-event2.jpg" alt="Promo 2" class="w-full h-auto object-cover max-h-96">
+      </div>
     </div>
   </div>
 
-  <!-- Centered Embedded Google Map -->
-  <div class="flex justify-center">
-    <div class="w-full md:w-3/4 lg:w-2/3 rounded-lg overflow-hidden shadow-lg border-4 border-purple-600">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.0447131428625!2d120.98567007511818!3d14.571983378066098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cda0ffed1f15%3A0x85e1aef61bb5eb6a!2s1727%20A.%20Mabini%20St%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1720838873842!5m2!1sen!2sph"
-        width="100%"
-        height="225"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+  <!-- 📍 Contact & Location (Right) -->
+  <div class="flex flex-col justify-between">
+    <h2 class="text-3xl font-bold mb-4">Location & Contact</h2>
+    <div class="flex items-center mb-2">
+      <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M12 10a2 2 0 110-4 2 2 0 010 4zm0 11c-4.418 0-8-4.03-8-9a8 8 0 0116 0c0 4.97-3.582 9-8 9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <a href="https://www.google.com/maps/place/1727+A.+Mabini+St,+Malate,+Manila,+1004+Metro+Manila" target="_blank" class="text-lg text-blue-800 underline hover:text-blue-600 transition">
+        1727 A. Mabini St, Malate, Manila, 1004 Metro Manila
+      </a>
     </div>
+    <p class="text-lg">Email: quernaxxmalate@gmail.com</p>
+    <p class="text-lg mt-2">Phone Numbers:</p>
+    <p class="text-lg">(02) 8706 5784</p>
+    <p class="text-lg mb-4">(02) 8708 0335</p>
   </div>
 </div>
+
+<!-- 🗺️ Centered Google Map Below -->
+<div class="flex justify-center">
+  <div class="w-full md:w-3/4 lg:w-2/3 rounded-lg overflow-hidden shadow-lg border-4 border-purple-600">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.0447131428625!2d120.98567007511818!3d14.571983378066098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cda0ffed1f15%3A0x85e1aef61bb5eb6a!2s1727%20A.%20Mabini%20St%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1720838873842!5m2!1sen!2sph"
+      width="100%"
+      height="225"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
 
 <!-- Gallery Modal -->
   <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
