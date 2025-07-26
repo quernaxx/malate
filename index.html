@@ -259,7 +259,7 @@
 
       const el = document.createElement(item.type === 'image' ? 'img' : 'video');
       el.src = item.src;
-      el.className = "w-full sm:w-4/5 md:w-2/3 max-h-[70vh] object-contain rounded-xl border-4 flash-border shadow-xl";
+      el.className = "max-w-full max-h-full object-contain rounded-xl border-4 flash-border shadow-xl";
       if (item.type === 'video') {
         el.controls = true;
         el.autoplay = true;
