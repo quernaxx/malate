@@ -229,7 +229,7 @@
       galleryItems.forEach((item, index) => {
         const el = document.createElement(item.type === 'image' ? 'img' : 'video');
         el.src = item.src;
-        el.className = "rounded-lg shadow-md cursor-pointer object-cover w-60 h-60 thumbnail border-4 flash-border";
+        el.className = "rounded-lg shadow-md cursor-pointer object-cover border-4 flash-border transform scale-[1.65] transition duration-300";
         if (item.type === 'video') {
           el.controls = true;
           el.muted = true;
