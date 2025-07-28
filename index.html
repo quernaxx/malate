@@ -38,6 +38,21 @@
       animation-delay: 1.25s;
     }
 
+    .promo-card:hover {
+    transform: scale(1.05) translateY(-20px) rotate(0deg);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    z-index: 50 !important;
+    }
+
+    #promoDeck:hover .promo-card:nth-child(2) {
+      transform: scale(1.02) translateY(-10px) rotate(-2deg);
+    }
+    
+    #promoDeck:hover .promo-card:nth-child(1) {
+      transform: scale(1.02) translateY(-5px) rotate(1deg);
+    }
+
     /* Flashing border for gallery thumbnails */
     @keyframes flash-border {
       0%   { border-color: #f43f5e; }
@@ -137,16 +152,21 @@
       <p class="text-lg">Check out our featured promos and upcoming nights below!</p>
     </div>
 
-    <!-- Promo Images Side-by-Side -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
-        <img src="images/Quarnaxx Happy Hour.png" alt="Promo 1" class="w-full h-auto object-cover max-h-96">
-      </div>
-      <div class="rounded-xl overflow-hidden border-4 border-purple-500 shadow-lg transition-transform hover:scale-105">
-        <img src="images/Quarnaxx Ladies Night.png" alt="Promo 2" class="w-full h-auto object-cover max-h-96">
-      </div>
-    </div>
-  </div>
+    <!-- Deck of Promo Cards -->
+<div id="promoDeck" class="relative h-[300px] sm:h-[350px] mt-6 ml-2 cursor-pointer w-full max-w-md">
+  <img src="images/Quarnaxx Happy Hour.png"
+       alt="Promo 1"
+       class="promo-card absolute top-0 left-0 w-full h-auto rounded-xl border-4 border-purple-500 shadow-xl object-cover z-10 transform transition-transform duration-300 hover:z-30">
+  <img src="images/Quarnaxx Ladies Night.png"
+       alt="Promo 2"
+       class="promo-card absolute top-0 left-0 w-full h-auto rounded-xl border-4 border-purple-500 shadow-xl object-cover z-20 transform translate-x-6 rotate-[-5deg] transition-transform duration-300 hover:z-30">
+</div>
+
+<!-- Zoom Modal -->
+<div id="promoModal" class="fixed inset-0 z-[999] hidden bg-black bg-opacity-90 flex items-center justify-center">
+  <img id="promoZoomImg" src="" class="max-w-3xl w-full rounded-lg border-4 border-purple-500 shadow-2xl transition-transform duration-300 scale-100">
+  <button onclick="closePromoModal()" class="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
+</div>
 
   <!-- 📍 Contact & Location (Right) -->
   <div class="flex flex-col justify-between">
@@ -200,6 +220,21 @@
 
 <!-- Gallery Script -->
   <script>
+
+// Promo Card Zoom Logic
+document.querySelectorAll('#promoDeck .promo-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const modal = document.getElementById("promoModal");
+    const zoomImg = document.getElementById("promoZoomImg");
+    zoomImg.src = card.src;
+    modal.classList.remove("hidden");
+  });
+});
+
+function closePromoModal() {
+  const modal = document.getElementById("promoModal");
+  modal.classList.add("hidden");
+}    
 
     const galleryItems = [
       { src: "images/gallery1.jpg", type: "image" },
@@ -345,7 +380,7 @@ document.addEventListener("keydown", (e) => {
   setInterval(() => {
     currentTheme = (currentTheme + 1) % themes.length;
     applyTheme(currentTheme);
-  }, 5000);
+  }, 5000);    
 </script>
 
 </body>
