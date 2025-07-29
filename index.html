@@ -153,7 +153,7 @@
     </div>
 
     <!-- Deck of Promo Cards -->
-<div id="promoDeck" class="relative h-[300px] sm:h-[350px] mt-6 ml-2 cursor-pointer w-full max-w-md">
+<div id="promoDeck" class="relative h-[300px] sm:h-[350px] mt-6 mx-auto cursor-pointer w-full max-w-md">
   <img src="images/Quarnaxx Happy Hour.png"
        alt="Promo 1"
        class="promo-card absolute top-0 left-0 w-full h-auto rounded-xl border-4 border-purple-500 shadow-xl object-cover z-10 transform transition-transform duration-300 hover:z-30">
@@ -167,10 +167,10 @@
   <img id="promoZoomImg" src="" class="max-w-3xl w-full rounded-lg border-4 border-purple-500 shadow-2xl transition-transform duration-300 scale-100">
   <button onclick="closePromoModal()" class="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
 </div>
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <!-- 📍 Contact & Location (Right) -->
   <div class="flex flex-col justify-between">
-    <h2 class="text-3xl font-bold mb-4">Location & Contact</h2>
+  <h2 class="text-3xl font-bold mb-4">Location & Contact</h2>
     <div class="flex items-center mb-2">
       <svg class="w-6 h-6 text-purple-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M12 10a2 2 0 110-4 2 2 0 010 4zm0 11c-4.418 0-8-4.03-8-9a8 8 0 0116 0c0 4.97-3.582 9-8 9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -186,8 +186,8 @@
   </div>
 </div>
 
-<!-- 🗺️ Centered Google Map Below -->
-<div class="flex justify-center">
+<!-- 🗺️ Map Section Below -->
+<div class="mt-8 flex justify-center md:col-span-2">
   <div class="w-full md:w-3/4 lg:w-2/3 rounded-lg overflow-hidden shadow-lg border-4 border-purple-600">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.0447131428625!2d120.98567007511818!3d14.571983378066098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cda0ffed1f15%3A0x85e1aef61bb5eb6a!2s1727%20A.%20Mabini%20St%2C%20Malate%2C%20Manila%2C%201004%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1720838873842!5m2!1sen!2sph"
@@ -230,6 +230,16 @@ document.querySelectorAll('#promoDeck .promo-card').forEach(card => {
     modal.classList.remove("hidden");
   });
 });
+
+const promoModal = document.getElementById("promoModal");
+  const promoZoomImg = document.getElementById("promoZoomImg");
+
+  promoZoomImg.addEventListener("click", closePromoModal);
+  document.addEventListener("keydown", (e) => {
+    if (!promoModal.classList.contains("hidden") && e.key === "Escape") {
+      closePromoModal();
+    }
+  });
 
 function closePromoModal() {
   const modal = document.getElementById("promoModal");
