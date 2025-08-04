@@ -69,6 +69,39 @@
     .thumbnail video::-webkit-media-controls-fullscreen-button {
       display: block;
     }
+
+    /* Marquee animation */
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Optional: Transparent scrollbar */
+  #promoDeck::-webkit-scrollbar {
+    height: 8px;
+    background: transparent;
+  }
+
+  #promoDeck::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
   </style>
 </head>
 <body class="bg-black text-white relative overflow-x-hidden">
@@ -153,30 +186,46 @@
     </div>
 
     <!-- Deck of Promo Cards -->
-<div id="promoDeck" class="mt-6 mx-auto max-w-full sm:max-w-3xl overflow-x-auto whitespace-nowrap px-4 py-2 flex gap-4 snap-x snap-mandatory scroll-smooth">
-  <div class="promo-card-container snap-start transform hover:scale-105 transition-transform duration-300">
-    <img src="images/Quarnaxx Happy Hour.png"
-         alt="Promo 1"
-         class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-10">
-  </div>
-  <div class="promo-card-container snap-start transform translate-x-2 rotate-[-3deg] hover:scale-105 transition-transform duration-300">
-    <img src="images/Quarnaxx Ladies Night.png"
-         alt="Promo 2"
-         class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-20">
-  </div>
-  <div class="promo-card-container snap-start transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
-    <img src="images/Karaoke night party Facebook Post.png"
-         alt="Promo 3"
-         class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
-  </div>
-  <div class="promo-card-container snap-start transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
-    <img src="images/Bucket promo.jpg"
-         alt="Promo 3"
-         class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
+<div id="promoDeck" class="marquee-wrapper mt-6 mx-auto max-w-full">
+  <div class="marquee-track">
+    <!-- FIRST SET of PROMOS -->
+    <div class="promo-card-container transform hover:scale-105 transition-transform duration-300">
+      <img src="images/Quarnaxx Happy Hour.png" alt="Promo 1"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-10">
+    </div>
+    <div class="promo-card-container transform translate-x-2 rotate-[-3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Quarnaxx Ladies Night.png" alt="Promo 2"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-20">
+    </div>
+    <div class="promo-card-container transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Karaoke night party Facebook Post.png" alt="Promo 3"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
+    </div>
+    <div class="promo-card-container transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Bucket promo.jpg" alt="Promo 4"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
+    </div>
+
+    <!-- DUPLICATE SET -->
+    <div class="promo-card-container transform hover:scale-105 transition-transform duration-300">
+      <img src="images/Quarnaxx Happy Hour.png" alt="Promo 1 Duplicate"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-10">
+    </div>
+    <div class="promo-card-container transform translate-x-2 rotate-[-3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Quarnaxx Ladies Night.png" alt="Promo 2 Duplicate"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-20">
+    </div>
+    <div class="promo-card-container transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Karaoke night party Facebook Post.png" alt="Promo 3 Duplicate"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
+    </div>
+    <div class="promo-card-container transform translate-x-4 rotate-[3deg] hover:scale-105 transition-transform duration-300">
+      <img src="images/Bucket promo.jpg" alt="Promo 4 Duplicate"
+        class="promo-card w-64 sm:w-72 max-w-xs rounded-xl border-4 border-purple-500 shadow-xl object-cover z-30">
+    </div>
   </div>
 </div>
-
-
+  
 <!-- Promo Modal Zoom -->
 <div id="promoModal" class="fixed inset-0 z-[999] hidden bg-black bg-opacity-90 flex items-center justify-center">
   <img id="promoZoomImg" src=""
