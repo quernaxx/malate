@@ -102,6 +102,19 @@
   #promoDeck::-webkit-scrollbar-thumb {
     background: transparent;
   }
+
+
+  /* Menu Flip Animation */
+@keyframes flipPage {
+  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  50% { transform: rotateY(90deg) scale(0.95); opacity: 0; }
+  100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+}
+
+.menu-flip {
+  animation: flipPage 0.6s ease-in-out;
+}
+
   </style>
 </head>
 <body class="bg-black text-white relative overflow-x-hidden">
@@ -130,7 +143,7 @@
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
       <div>
         <img src="images/QuernaxxLogo_Watermark_transparent.png" alt="Logo" class="mx-auto mb-4 w-150 h-150 object-contain">
-      <!--- <h1 class="text-5xl md:text-6xl font-extrabold tracking-widest mb-1">QUERNAXX</h1>
+       <!--- <h1 class="text-5xl md:text-6xl font-extrabold tracking-widest mb-1">QUERNAXX</h1>
         <h2 class="text-2xl font-semibold text-purple-300 mb-4">Malate</h2> --->
         <p class="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
           Dive into the ultimate nightlife experience — music, lights, and electrifying vibes await you at Malate’s hottest music club.
@@ -138,6 +151,9 @@
         <button onclick="openGallery()" class="bg-purple-600 hover:bg-purple-700 text-white text-lg px-8 py-4 rounded-2xl shadow-lg transition">
           Explore Events - Photos and Video's
         </button>
+        <button onclick="openMenuBook()" class="mt-4 bg-yellow-500 hover:bg-yellow-600 text-black text-lg px-8 py-4 rounded-2xl shadow-lg transition">
+  📖 View Our Menu
+</button>
       </div>
     </div>
   </div>
@@ -150,7 +166,7 @@
   <span class="text-purple-300 font-extrabold">QUERNAXX</span> Malate!
 </p>
 <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-4">
-  Be part of history as we gear up for our official launch — <span class="text-yellow-300 font-semibold">date to be announced</span>! 
+  Be part of history as we officially launch on <span class="text-yellow-300 font-semibold">August 15, 2025</span>. 
   Get ready for pulsing beats, dancing lights, and an unforgettable night of music, drinks, and pure energy!
 </p>
 <p class="text-lg md:text-xl text-white font-semibold mb-2">⏰ Hours of Operation</p>
@@ -249,6 +265,27 @@
     </div>
   </div>
 </div>
+
+
+<!-- Menu Modal -->
+<div id="menuModal" class="fixed inset-0 z-[9999] hidden bg-black bg-opacity-90 flex items-center justify-center">
+  <div class="relative flex items-center justify-center w-full h-full">
+    
+    <!-- Close Button -->
+    <button onclick="closeMenuBook()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
+    
+    <!-- Prev Button -->
+    <button onclick="prevMenuPage()" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8592;</button>
+    
+    <!-- Menu Image -->
+    <img id="menuImage" 
+     src="images/Quernaxx_Menu_Page_1.png" 
+     class="w-auto h-auto max-w-[70vw] max-h-[70vh] object-contain rounded-xl border-4 border-yellow-400 shadow-2xl transition duration-300" />
+    
+    <!-- Next Button -->
+    <button onclick="nextMenuPage()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl px-4 z-50">&#8594;</button>
+  </div>
+</div>
   
 <!-- Promo Modal Zoom -->
 <div id="promoModal" class="fixed inset-0 z-[999] hidden bg-black bg-opacity-90 flex items-center justify-center">
@@ -309,6 +346,59 @@
 
 <!-- Gallery Script -->
   <script>
+
+
+// Menu Book Logic
+const menuPages = [
+  "images/Quernaxx_Menu_Page_1.png",
+  "images/Quernaxx_Menu_Page_2.png",
+  "images/Quernaxx_Menu_Page_3.png",
+  "images/Quernaxx_Menu_Page_4.png",
+  "images/Quernaxx_Menu_Page_5.png"
+];
+
+let currentMenuPage = 0;
+const menuModal = document.getElementById("menuModal");
+const menuImage = document.getElementById("menuImage");
+
+function showMenuPage() {
+  menuImage.classList.remove("menu-flip"); // reset
+  void menuImage.offsetWidth; // re-trigger animation
+  menuImage.src = menuPages[currentMenuPage];
+  menuImage.classList.add("menu-flip");
+}
+
+function openMenuBook() {
+  currentMenuPage = 0;
+  showMenuPage();
+  menuModal.classList.remove("hidden");
+}
+
+function closeMenuBook() {
+  menuModal.classList.add("hidden");
+}
+
+function nextMenuPage() {
+  currentMenuPage = (currentMenuPage + 1) % menuPages.length;
+  showMenuPage();
+}
+
+function prevMenuPage() {
+  currentMenuPage = (currentMenuPage - 1 + menuPages.length) % menuPages.length;
+  showMenuPage();
+}
+
+// 👉 Click on image = next page
+menuImage.addEventListener("click", nextMenuPage);
+
+// 👉 Keyboard controls
+document.addEventListener("keydown", (e) => {
+  if (!menuModal.classList.contains("hidden")) {
+    if (e.key === "Escape") closeMenuBook();
+    if (e.key === "ArrowRight") nextMenuPage();
+    if (e.key === "ArrowLeft") prevMenuPage();
+  }
+});  
 
 // Promo Card Zoom Logic
 document.querySelectorAll('#promoDeck .promo-card').forEach(card => {
