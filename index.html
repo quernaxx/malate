@@ -296,12 +296,13 @@
 </div>
 
 
-  <!-- Right: Static Images (Side by Side) -->
-<div class="flex flex-row gap-4 w-64">
-  <img src="images/TwerkComp2.jpg" alt="Static Promo 1"
-       class="static-img rounded-xl border-4 border-yellow-400 shadow-xl object-cover cursor-pointer transition-transform duration-300">
-  <img src="images/TwerkComp.jpg" alt="Static Promo 2"
-       class="static-img rounded-xl border-4 border-yellow-400 shadow-xl object-cover cursor-pointer transition-transform duration-300">
+ <!-- Right: Static Images -->
+  <div class="flex flex-col gap-4 w-64">
+    <img src="images/static1.jpg" alt="Static Promo 1"
+         class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
+    <img src="images/static2.jpg" alt="Static Promo 2"
+         class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
+  </div>
 </div>
 
 <!-- Menu Modal -->
@@ -382,17 +383,7 @@
   </div>
 
 <!-- Gallery Script -->
-  <script>
-
-document.querySelectorAll('.static-img').forEach(img => {
-    img.addEventListener('click', () => {
-      img.classList.toggle('scale-150'); // zoom in/out
-      img.classList.toggle('z-50');      // bring to front
-    });
-  });
-
-
-    
+ <script>
 // Menu Book Logic
 const menuPages = [
   "images/Quernaxx_Menu_Page_1.png",
