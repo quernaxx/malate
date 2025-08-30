@@ -203,8 +203,11 @@
     </div>
 
     <!-- Deck of Promo Cards -->
-<div id="promoDeck" class="marquee-wrapper mt-6 mx-auto max-w-full">
-  <div class="marquee-track">
+<div class="flex items-start gap-6 mt-6 mx-auto max-w-full">
+
+  <!-- Left: Marquee Promo Deck -->
+  <div id="promoDeck" class="marquee-wrapper flex-1">
+    <div class="marquee-track">
     <!-- FIRST SET of PROMOS -->
     <div class="promo-card-container transform hover:scale-105 transition-transform duration-300">
       <img src="images/Quarnaxx Happy Hour.png" alt="Promo 1"
@@ -292,6 +295,15 @@
   </div>
 </div>
 
+
+  <!-- Right: Static Images -->
+  <div class="flex flex-col gap-4 w-64">
+    <img src="images/TwerkComp.jpg" alt="Static Promo 1"
+         class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
+    <img src="images/TwerkComp2.jpg" alt="Static Promo 2"
+         class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
+  </div>
+</div>
 
 <!-- Menu Modal -->
 <div id="menuModal" class="fixed inset-0 z-[9999] hidden bg-black bg-opacity-90 flex items-center justify-center">
