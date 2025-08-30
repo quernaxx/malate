@@ -297,13 +297,19 @@
 
 
 <!-- Right: Static Images (Side by Side) -->
-<div class="flex flex-row gap-4 w-64">
-  <img src="images/TwerkComp2.jpg" alt="Static Promo 1"
-       class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
-  <img src="images/TwerkComp.jpg" alt="Static Promo 2"
-       class="rounded-xl border-4 border-yellow-400 shadow-xl object-cover">
+  <div class="flex flex-row gap-4 w-64">
+    <img src="images/static1.jpg" alt="Static Promo 1"
+         class="zoomable rounded-xl border-4 border-yellow-400 shadow-xl object-cover cursor-pointer">
+    <img src="images/static2.jpg" alt="Static Promo 2"
+         class="zoomable rounded-xl border-4 border-yellow-400 shadow-xl object-cover cursor-pointer">
+  </div>
 </div>
+
+<!-- Fullscreen Overlay for Zoomed Image -->
+<div id="zoomOverlay" class="hidden fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+  <img id="zoomedImg" src="" alt="Zoomed Image" class="max-w-full max-h-full rounded-xl shadow-2xl cursor-pointer">
 </div>
+
 
 <!-- Menu Modal -->
 <div id="menuModal" class="fixed inset-0 z-[9999] hidden bg-black bg-opacity-90 flex items-center justify-center">
@@ -384,6 +390,8 @@
 
 <!-- Gallery Script -->
  <script>
+
+   
 // Menu Book Logic
 const menuPages = [
   "images/Quernaxx_Menu_Page_1.png",
@@ -633,6 +641,25 @@ document.addEventListener("keydown", (e) => {
     currentTheme = (currentTheme + 1) % themes.length;
     applyTheme(currentTheme);
   }, 5000);    
+
+// Get overlay and zoomed image
+  const overlay = document.getElementById('zoomOverlay');
+  const zoomedImg = document.getElementById('zoomedImg');
+
+  // Attach click event to each zoomable image
+  document.querySelectorAll('.zoomable').forEach(img => {
+    img.addEventListener('click', () => {
+      zoomedImg.src = img.src;      // set clicked image
+      overlay.classList.remove('hidden'); // show overlay
+    });
+  });
+
+  // Hide overlay when clicked
+  overlay.addEventListener('click', () => {
+    overlay.classList.add('hidden');
+    zoomedImg.src = '';
+  });
+   
 </script>
 
 </body>
