@@ -454,6 +454,17 @@
         🎨 Animate Images
       </button>
     </div>
+
+    <button onclick="startSlideshow()" 
+    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
+    ▶️ Start Slideshow
+  </button>
+
+  <button onclick="stopSlideshow()" 
+    class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
+    ⏹ Stop Slideshow
+  </button>
+</div>
     
     <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2><br>
     <div class="w-full max-w-6xl grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mx-auto justify-center items-center" id="thumbsContainer"></div>
@@ -740,28 +751,77 @@ document.addEventListener("keydown", (e) => {
     zoomedImg.src = '';
   });
    
- // ✅ Animate Images Function
-function animateGalleryImages() {
-  const thumbs = document.querySelectorAll('#thumbsContainer img');
+// ✅ Animation effects list
+  const effects = [
+    "animate-fade","animate-fly","animate-zoomin","animate-zoomout",
+    "animate-slideleft","animate-slideright","animate-bounce",
+    "animate-flip","animate-rotate","animate-pulse","animate-swing"
+  ];
 
-  thumbs.forEach((img, index) => {
-    // Only target .png and .jpg
-    if (img.src.match(/\.(png|jpg)$/i)) {
-      // Clear previous animation
-      img.classList.remove("animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout" ,"animate-slideleft", "animate-slideright", "animate-bounce", "animate-flip","animate-rotate","animate-pulse","animate-swing");
+  let animationInterval = null;
+  let slideshowInterval = null;
+  let isAnimating = false;
 
-      // Delay each image slightly for staggered effect
-      setTimeout(() => {
-        const effects = ["animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout" ,"animate-slideleft", "animate-slideright", "animate-bounce", "animate-flip","animate-rotate","animate-pulse","animate-swing"];
-        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-        img.classList.add(randomEffect);
+  // ✅ Animate Images Toggle Function
+  function animateGalleryImages() {
+    const thumbs = document.querySelectorAll('#thumbsContainer img');
 
-        // Remove after animation so it can retrigger
-        setTimeout(() => img.classList.remove(randomEffect), 1200);
-      }, index * 150);
+    if (!isAnimating) {
+      isAnimating = true;
+
+      animationInterval = setInterval(() => {
+        thumbs.forEach((img, index) => {
+          if (img.src.match(/\.(png|jpg)$/i)) {
+            // Remove all animations
+            img.classList.remove(...effects);
+
+            // Apply random effect with stagger
+            setTimeout(() => {
+              const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+              img.classList.add(randomEffect);
+
+              // Remove after animation so it can repeat
+              setTimeout(() => img.classList.remove(randomEffect), 1200);
+            }, index * 150);
+          }
+        });
+      }, 2000); // repeat every 2s
+
+    } else {
+      // Stop loop when clicked again
+      clearInterval(animationInterval);
+      isAnimating = false;
     }
-  });
-}
+  }
+
+  // ✅ Slideshow Function
+  function startSlideshow() {
+    const thumbs = document.querySelectorAll('#thumbsContainer img');
+    let index = 0;
+
+    // Clear previous slideshow if running
+    clearInterval(slideshowInterval);
+
+    thumbs.forEach(img => img.style.display = "none");
+
+    slideshowInterval = setInterval(() => {
+      thumbs.forEach(img => img.style.display = "none");
+      thumbs[index % thumbs.length].style.display = "block";
+
+      // Add slide animation
+      thumbs[index % thumbs.length].classList.add("animate-slideleft");
+      setTimeout(() => thumbs[index % thumbs.length].classList.remove("animate-slideleft"), 1200);
+
+      index++;
+    }, 2500); // change every 2.5s
+  }
+
+  // ✅ Stop Slideshow
+  function stopSlideshow() {
+    clearInterval(slideshowInterval);
+    const thumbs = document.querySelectorAll('#thumbsContainer img');
+    thumbs.forEach(img => img.style.display = "block"); // show all again
+  }
 </script>
   <a href="http://www.freevisitorcounters.com" class="text-sm text-gray-400 hover:text-yellow-400">
     freevisitorcounters.com
