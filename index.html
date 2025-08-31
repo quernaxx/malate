@@ -483,7 +483,9 @@
  <script>
 
    
-// Menu Book Logic
+// ============================
+// ✅ Menu Book Logic
+// ============================
 const menuPages = [
   "images/Quernaxx_Menu_Page_1.png",
   "images/Quernaxx_Menu_Page_2.png",
@@ -535,7 +537,9 @@ document.addEventListener("keydown", (e) => {
   }
 });  
 
-// Promo Card Zoom Logic
+// ============================
+// ✅ Promo Card Zoom Logic
+// ============================
 document.querySelectorAll('#promoDeck .promo-card').forEach(card => {
   card.addEventListener('click', () => {
     const modal = document.getElementById("promoModal");
@@ -546,25 +550,26 @@ document.querySelectorAll('#promoDeck .promo-card').forEach(card => {
 });
 
 const promoModal = document.getElementById("promoModal");
-  const promoZoomImg = document.getElementById("promoZoomImg");
+const promoZoomImg = document.getElementById("promoZoomImg");
 
-  document.querySelectorAll('.promo-card').forEach(card => {
-    card.addEventListener('click', () => {
-      promoZoomImg.src = card.src;
-      promoModal.classList.remove("hidden");
-    });
+document.querySelectorAll('.promo-card').forEach(card => {
+  card.addEventListener('click', () => {
+    promoZoomImg.src = card.src;
+    promoModal.classList.remove("hidden");
   });
+});
 
-  function closePromoModal() {
-    promoModal.classList.add("hidden");
+function closePromoModal() {
+  promoModal.classList.add("hidden");
+}
+
+promoZoomImg.addEventListener("click", closePromoModal);
+document.addEventListener("keydown", (e) => {
+  if (!promoModal.classList.contains("hidden") && e.key === "Escape") {
+    closePromoModal();
   }
-
-  promoZoomImg.addEventListener("click", closePromoModal);
-  document.addEventListener("keydown", (e) => {
-    if (!promoModal.classList.contains("hidden") && e.key === "Escape") {
-      closePromoModal();
-    }
-  });    
+});
+    
 
     const galleryItems = [
       { src: "images/quernaxx01.png", type: "image" },
@@ -762,66 +767,90 @@ document.addEventListener("keydown", (e) => {
   let slideshowInterval = null;
   let isAnimating = false;
 
-  // ✅ Animate Images Toggle Function
-  function animateGalleryImages() {
-    const thumbs = document.querySelectorAll('#thumbsContainer img');
+// ============================
+// ✅ Animate Images Logic
+// ============================
+let animationInterval = null;
 
-    if (!isAnimating) {
-      isAnimating = true;
+function animateGalleryImages() {
+  const thumbs = document.querySelectorAll('#thumbsContainer img');
 
-      animationInterval = setInterval(() => {
-        thumbs.forEach((img, index) => {
-          if (img.src.match(/\.(png|jpg)$/i)) {
-            // Remove all animations
-            img.classList.remove(...effects);
+  thumbs.forEach((img, index) => {
+    if (img.src.match(/\.(png|jpg)$/i)) {
+      // Reset previous animations
+      img.classList.remove(
+        "animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout",
+        "animate-slideleft", "animate-slideright", "animate-bounce",
+        "animate-flip", "animate-rotate", "animate-pulse", "animate-swing"
+      );
 
-            // Apply random effect with stagger
-            setTimeout(() => {
-              const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-              img.classList.add(randomEffect);
+      setTimeout(() => {
+        const effects = [
+          "animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout",
+          "animate-slideleft", "animate-slideright", "animate-bounce",
+          "animate-flip", "animate-rotate", "animate-pulse", "animate-swing"
+        ];
+        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+        img.classList.add(randomEffect);
 
-              // Remove after animation so it can repeat
-              setTimeout(() => img.classList.remove(randomEffect), 1200);
-            }, index * 150);
-          }
-        });
-      }, 2000); // repeat every 2s
-
-    } else {
-      // Stop loop when clicked again
-      clearInterval(animationInterval);
-      isAnimating = false;
+        // Remove after animation so it can retrigger
+        setTimeout(() => img.classList.remove(randomEffect), 1200);
+      }, index * 150);
     }
+  });
+}
+
+// 👉 Toggle Animation Loop
+function toggleImageAnimations() {
+  const btn = document.getElementById("animateImagesBtn");
+
+  if (animationInterval) {
+    clearInterval(animationInterval);
+    animationInterval = null;
+    btn.textContent = "Animate Images";
+  } else {
+    animateGalleryImages(); // run once immediately
+    animationInterval = setInterval(animateGalleryImages, 3000);
+    btn.textContent = "Stop Animations";
   }
+}
 
-  // ✅ Slideshow Function
-  function startSlideshow() {
-    const thumbs = document.querySelectorAll('#thumbsContainer img');
-    let index = 0;
+// ============================
+// ✅ Slideshow Logic
+// ============================
+let slideshowInterval = null;
+let currentSlideIndex = 0;
 
-    // Clear previous slideshow if running
+function startSlideshow() {
+  const thumbs = document.querySelectorAll('#thumbsContainer img');
+  if (thumbs.length === 0) return;
+
+  const btn = document.getElementById("slideshowBtn");
+
+  if (slideshowInterval) {
     clearInterval(slideshowInterval);
-
-    thumbs.forEach(img => img.style.display = "none");
+    slideshowInterval = null;
+    btn.textContent = "Start Slideshow";
+    thumbs.forEach(img => img.classList.remove("active-slide"));
+  } else {
+    currentSlideIndex = 0;
+    showSlide(thumbs, currentSlideIndex);
 
     slideshowInterval = setInterval(() => {
-      thumbs.forEach(img => img.style.display = "none");
-      thumbs[index % thumbs.length].style.display = "block";
+      thumbs[currentSlideIndex].classList.remove("active-slide");
+      currentSlideIndex = (currentSlideIndex + 1) % thumbs.length;
+      showSlide(thumbs, currentSlideIndex);
+    }, 2500);
 
-      // Add slide animation
-      thumbs[index % thumbs.length].classList.add("animate-slideleft");
-      setTimeout(() => thumbs[index % thumbs.length].classList.remove("animate-slideleft"), 1200);
-
-      index++;
-    }, 2500); // change every 2.5s
+    btn.textContent = "Stop Slideshow";
   }
+}
 
-  // ✅ Stop Slideshow
-  function stopSlideshow() {
-    clearInterval(slideshowInterval);
-    const thumbs = document.querySelectorAll('#thumbsContainer img');
-    thumbs.forEach(img => img.style.display = "block"); // show all again
-  }
+function showSlide(thumbs, index) {
+  thumbs.forEach((img, i) => {
+    img.classList.toggle("active-slide", i === index);
+  });
+}
 </script>
   <a href="http://www.freevisitorcounters.com" class="text-sm text-gray-400 hover:text-yellow-400">
     freevisitorcounters.com
