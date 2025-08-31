@@ -444,15 +444,17 @@
 
 
 <!-- Gallery Modal -->
-
-  <div class="text-center mb-4">
-  <button onclick="animateGalleryImages()" 
-    class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
-    🎨 Animate Images
-  </button>
-</div>
   <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex-col items-center justify-start overflow-y-auto pt-20 px-4">
     <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-3xl font-bold z-50">&times;</button>
+    
+<!-- 🎨 Animate Button -->
+    <div class="text-center mb-4">
+      <button onclick="animateGalleryImages()" 
+        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg shadow-lg transition">
+        🎨 Animate Images
+      </button>
+    </div>
+    
     <h2 class="text-white text-3xl font-semibold mb-6 text-center">Event Gallery</h2><br>
     <div class="w-full max-w-6xl grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mx-auto justify-center items-center" id="thumbsContainer"></div>
     <div id="mediaViewer" class="fixed inset-0 hidden flex items-center justify-center z-60 overflow-y-auto">
@@ -737,8 +739,9 @@ document.addEventListener("keydown", (e) => {
     overlay.classList.add('hidden');
     zoomedImg.src = '';
   });
-
-   function animateGalleryImages() {
+   
+// ✅ Animate Images Function
+function animateGalleryImages() {
   const thumbs = document.querySelectorAll('#thumbsContainer img');
 
   thumbs.forEach((img, index) => {
@@ -753,13 +756,14 @@ document.addEventListener("keydown", (e) => {
         const randomEffect = effects[Math.floor(Math.random() * effects.length)];
         img.classList.add(randomEffect);
 
-        // Remove the effect after animation completes (so it can be retriggered)
+        // Remove after animation so it can retrigger
         setTimeout(() => img.classList.remove(randomEffect), 1200);
       }, index * 150);
     }
   });
 }
    
+
 </script>
   <a href="http://www.freevisitorcounters.com" class="text-sm text-gray-400 hover:text-yellow-400">
     freevisitorcounters.com
