@@ -740,29 +740,63 @@ document.addEventListener("keydown", (e) => {
     zoomedImg.src = '';
   });
    
-// ✅ Animate Images Function
-function animateGalleryImages() {
-  const thumbs = document.querySelectorAll('#thumbsContainer img');
+ // ✅ Animation effects list
+  const effects = [
+    "animate-fade","animate-fly","animate-zoomin","animate-zoomout",
+    "animate-slideleft","animate-slideright","animate-bounce",
+    "animate-flip","animate-rotate","animate-pulse","animate-swing"
+  ];
 
-  thumbs.forEach((img, index) => {
-    // Only target .png and .jpg
-    if (img.src.match(/\.(png|jpg)$/i)) {
-      // Clear previous animation
-      img.classList.remove("animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout");
+  let animationInterval;
 
-      // Delay each image slightly for staggered effect
-      setTimeout(() => {
-        const effects = ["animate-fade", "animate-fly", "animate-zoomin", "animate-zoomout"];
+  // ✅ Auto Animation Loop
+  function startAutoAnimation() {
+    const thumbs = document.querySelectorAll('#thumbsContainer img');
+    let index = 0;
+
+    // Run loop every 1.5s
+    animationInterval = setInterval(() => {
+      thumbs.forEach(img => {
+        if (img.src.match(/\.(png|jpg)$/i)) {
+          img.classList.remove(...effects);
+        }
+      });
+
+      if (thumbs.length > 0) {
         const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-        img.classList.add(randomEffect);
+        thumbs[index % thumbs.length].classList.add(randomEffect);
 
-        // Remove after animation so it can retrigger
-        setTimeout(() => img.classList.remove(randomEffect), 1200);
-      }, index * 150);
-    }
-  });
-}
-   
+        // Remove after animation so it can repeat
+        setTimeout(() => thumbs[index % thumbs.length].classList.remove(randomEffect), 1200);
+
+        index++;
+      }
+    }, 1500);
+  }
+
+  // ✅ Open Gallery
+  function openGallery() {
+    const container = document.getElementById("thumbsContainer");
+    container.innerHTML = "";
+
+    galleryImages.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = "w-full h-40 object-cover rounded-lg border-2 border-yellow-400 shadow-lg";
+      container.appendChild(img);
+    });
+
+    document.getElementById("galleryModal").classList.remove("hidden");
+
+    // Start animation automatically
+    startAutoAnimation();
+  }
+
+  // ✅ Close Gallery
+  function closeGallery() {
+    document.getElementById("galleryModal").classList.add("hidden");
+    clearInterval(animationInterval); // stop loop
+  }
 
 </script>
   <a href="http://www.freevisitorcounters.com" class="text-sm text-gray-400 hover:text-yellow-400">
